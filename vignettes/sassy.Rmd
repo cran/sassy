@@ -1,0 +1,63 @@
+---
+title: "sassy"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{sassy}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The **sassy** package is a meta-package that aims to make R easier for SAS®
+programmers.  The package brings several familiar SAS® concepts to R, including
+data libraries, formats and format catalogs, data dictionaries, a data step,
+a traceable log, and a reporting package with a variety of printable report types.
+
+The **sassy** family of packages is meant to compliment the 
+**tidyverse**.  While the **tidyverse** focuses mainly on data manipulation
+and development tools, the **sassy** packages are focused more on 
+formatting and reporting. For most projects, it is expected that users will 
+load both the **tidyverse** and **sassy** meta-packages.  Between these two, 
+the user will typically have everything they need to easily manipulate and 
+report on their data.  
+
+### Included Packages
+The **sassy** meta-package contains the following packages:
+
+* **[logr](https://logr.r-sassy.org)**: Produces a traceable log
+* **[fmtr](https://fmtr.r-sassy.org)**: Provides functions for formatting 
+data and a creating a format catalog
+* **[libr](https://libr.r-sassy.org)**: Gives you the ability to define a 
+libname, generate a data dictionary, and simulate a data step
+* **[reporter](https://reporter.r-sassy.org)**: A reporting package with easy 
+layout capabilities and the 
+ability to write reports in TXT, RTF, and PDF file formats
+
+The above links will take you into the respective packages for a deep
+dive on their capabilities.  
+
+### Next Steps
+Before taking a deep dive into the **sassy** package documentation, please
+look at some examples. These examples will give you a feel for the overall
+flow of a **sassy**-enhanced program, and allow you to see how the functions 
+work together.
+
+The following examples are provided on this site:
+
+* **[Example 1](sassy-listing.html)**: 
+Creates a simple data listing and log
+* **[Example 2](sassy-table.html)**: 
+Creates a table of summary statistics
+* **[Example 3](sassy-figure.html)**: 
+Creates a figure with a by-group
+
+Once you review these examples, please proceed to the package links above to
+explore the system further!
+
+
