@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 #  pkg <- system.file("extdata", package = "sassy")
 #  
 #  # Open log
-#  lgpth <- log_open(file.path(tmp, "example2.log"))
+#  lgpth <- log_open(file.path(tmp, "example5.log"))
 #  
 #  sep("Prepare Data")
 #  

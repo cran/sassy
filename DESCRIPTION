@@ -1,7 +1,7 @@
 Package: sassy
 Type: Package
 Title: Makes 'R' Easier for 'SAS®' Programmers
-Version: 1.0.4
+Version: 1.0.5
 Author: David J. Bosak
 Maintainer: David Bosak <dbosak01@gmail.com>
 Description: A meta-package that aims to make 'R' easier for 'SAS®' programmers.
@@ -12,8 +12,7 @@ Description: A meta-package that aims to make 'R' easier for 'SAS®' programmers
     'PDF' file formats.
 License: CC BY-NC 4.0
 Encoding: UTF-8
-LazyData: true
-Depends: R (>= 4.0.0)
+Depends: R (>= 3.6.0)
 URL: https://r-sassy.org
 BugReports: https://github.com/dbosak01/sassy/issues
 Suggests: testthat, knitr, rmarkdown, tidylog, magrittr
@@ -21,6 +20,6 @@ Imports: logr, fmtr, libr, reporter
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2021-03-14 03:17:35 UTC; dbosa
+Packaged: 2021-08-07 13:32:11 UTC; dbosa
 Repository: CRAN
-Date/Publication: 2021-03-14 18:40:02 UTC
+Date/Publication: 2021-08-07 13:50:02 UTC

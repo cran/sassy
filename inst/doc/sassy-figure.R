@@ -8,75 +8,124 @@ knitr::opts_chunk$set(
 #  library(tidyverse)
 #  library(sassy)
 #  
+#  
+#  # Prepare Log -------------------------------------------------------------
+#  
+#  
 #  options("logr.autolog" = TRUE,
 #          "logr.notes" = FALSE)
 #  
 #  # Get path to temp directory
 #  tmp <- tempdir()
 #  
-#  # Get path to sample data
-#  pkg <- system.file("extdata", package = "sassy")
+#  # Get sample data directory
+#  dir <- system.file("extdata", package = "sassy")
 #  
 #  # Open log
 #  lgpth <- log_open(file.path(tmp, "example3.log"))
 #  
+#  
+#  # Load and Prepare Data ---------------------------------------------------
+#  
 #  sep("Prepare Data")
 #  
-#  # Create libname for csv data
-#  libname(sdtm, pkg, "csv")
+#  # Define data library
+#  libname(sdtm, dir, "csv")
 #  
-#  # Load data into workspace
+#  # Loads data into workspace
 #  lib_load(sdtm)
 #  
-#  put("Perform joins and basic filters")
-#  prep <- sdtm.DM %>%
-#    left_join(sdtm.VS, by = c("USUBJID" = "USUBJID")) %>%
-#    select(USUBJID, ARMCD, ARM, VSTESTCD, VSTEST, VSORRES, VISITNUM, VISIT) %>%
-#    filter(VSTESTCD %in% c("SYSBP", "DIABP", "PULSE", "TEMP", "RESP"),
-#           ARMCD != "SCRNFAIL") %>% put()
+#  # Prepare data
+#  dm_mod <- sdtm.DM %>%
+#    select(USUBJID, SEX, AGE, ARM) %>%
+#    filter(ARM != "SCREEN FAILURE") %>%
+#    datastep({
 #  
-#  put("Group and summarize")
-#  final <- prep %>%
-#    group_by(ARMCD, ARM, VSTESTCD, VSTEST, VISITNUM, VISIT) %>%
-#    summarize(MEAN = mean(VSORRES, na.rm = TRUE)) %>%
-#    filter(VISITNUM > 0 & VISITNUM < 20) %>%
-#    mutate(VISIT = factor(VISIT, levels = c("DAY 1", "WEEK 2", "WEEK 4",
-#                                            "WEEK 6","WEEK 8", "WEEK 12",
-#                                            "WEEK 16"))) %>%
-#    ungroup() %>% put()
+#       if (AGE >= 18 & AGE <= 24)
+#         AGECAT = "18 to 24"
+#       else if (AGE >= 25 & AGE <= 44)
+#         AGECAT = "25 to 44"
+#       else if (AGE >= 45 & AGE <= 64)
+#         AGECAT <- "45 to 64"
+#       else if (AGE >= 65)
+#         AGECAT <- ">= 65"
+#  
+#     }) %>% put()
+#  
+#  put("Get population counts")
+#  arm_pop <- count(dm_mod, ARM) %>% put()
+#  sex_pop <- count(dm_mod, SEX) %>% put()
+#  agecat_pop <- count(dm_mod, AGECAT) %>% put()
+#  
+#  # Convert agecat to factor so rows will sort correctly
+#  agecat_pop$AGECAT <- factor(agecat_pop$AGECAT, levels = c("18 to 24",
+#                                                            "25 to 44",
+#                                                            "45 to 64",
+#                                                            ">= 65"))
+#  # Sort agecat
+#  agecat_pop <- agecat_pop %>% arrange(AGECAT)
 #  
 #  
-#  sep("Create plots and print report")
+#  # Create Plots ------------------------------------------------------------
 #  
-#  # Create plot
-#  p <- final %>%
-#    ggplot(mapping = aes(y = MEAN, x = VISIT , group = ARM)) +
-#    geom_point(aes(shape = ARM, color = ARM)) +
-#    geom_line(aes(linetype = ARM, color = ARM)) +
-#    scale_x_discrete(name = "Visit") +
-#    scale_y_continuous(name = "Value")
 #  
-#  # Construct output path
-#  pth <- file.path(tmp, "output/f_vs.rtf")
+#  plt1 <- ggplot(data = arm_pop, aes(x = ARM, y = n)) +
+#    geom_col(fill = "#0000A0") +
+#    geom_text(aes(label = n), vjust = 1.5, colour = "white") +
+#    labs(x = "Treatment Group", y = "Number of Subjects (n)")
 #  
-#  # Define report object
+#  plt2 <- ggplot(data = sex_pop, aes(x = SEX, y = n)) +
+#    geom_col(fill = "#00A000") +
+#    geom_text(aes(label = n), vjust = 1.5, colour = "white") +
+#    labs(x = "Biological Sex", y = "Number of Subjects (n)")
+#  
+#  plt3 <- ggplot(data = agecat_pop, aes(x = AGECAT, y = n)) +
+#    geom_col(fill = "#A00000") +
+#    geom_text(aes(label = n), vjust = 1.5, colour = "white") +
+#    labs(x = "Age Categories", y = "Number of Subjects (n)")
+#  
+#  
+#  # Report ------------------------------------------------------------------
+#  
+#  
+#  sep("Create and print report")
+#  
+#  
+#  pth <- file.path(tmp, "output/example3.rtf")
+#  
+#  
+#  page1 <- create_plot(plt1, 4.5, 7) %>%
+#    titles("Figure 1.1", "Distribution of Subjects by Treatment Group")
+#  
+#  page2 <- create_plot(plt2, 4.5, 7) %>%
+#    titles("Figure 1.2", "Distribution of Subjects by Biological Sex")
+#  
+#  page3 <- create_plot(plt3, 4.5, 7) %>%
+#    titles("Figure 1.2", "Distribution of Subjects by Age Category")
+#  
 #  rpt <- create_report(pth, output_type = "RTF") %>%
 #    set_margins(top = 1, bottom = 1) %>%
 #    page_header("Sponsor: Company", "Study: ABC") %>%
-#    page_by(VSTEST, "Vital Sign: ", blank_row = "none") %>%
-#    titles("Figure 1.0", "Vital Signs Change from Baseline",
-#           "Safety Population") %>%
-#    add_content(create_plot(p, 4.5, 9)) %>%
-#    footnotes("R Program: VS_Figure.R") %>%
+#    add_content(page1) %>%
+#    add_content(page2) %>%
+#    add_content(page3) %>%
+#    footnotes("Program: DM_Figure.R") %>%
 #    page_footer(paste0("Date Produced: ", fapply(Sys.time(), "%d%b%y %H:%M")),
 #                right = "Page [pg] of [tpg]")
 #  
-#  # Write report to file system
 #  write_report(rpt)
+#  
+#  
+#  # Clean Up ----------------------------------------------------------------
+#  
+#  # Unload library from workspace
+#  lib_unload(sdtm)
 #  
 #  # Close log
 #  log_close()
 #  
-#  # View report
+#  # View files
 #  # file.show(pth)
+#  # file.show(lgpth)
+#  
 
