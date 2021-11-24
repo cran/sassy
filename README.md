@@ -2,8 +2,10 @@
 
 [![sassy version](https://www.r-pkg.org/badges/version/sassy)](https://cran.r-project.org/package=sassy)
 [![sassy lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://cran.r-project.org/package=sassy)
-[![sassy downloads](https://cranlogs.r-pkg.org/badges/grand-total/sassy)](https://cran.r-project.org/package=sassy)
+[![sassy downloads](https://cranlogs.r-pkg.org/badges/sassy)](https://cran.r-project.org/package=sassy)
+[![sassy total downloads](https://cranlogs.r-pkg.org/badges/grand-total/sassy)](https://cran.r-project.org/package=sassy)
 [![R-CMD-check](https://github.com/dbosak01/sassy/workflows/R-CMD-check/badge.svg)](https://github.com/dbosak01/sassy/actions)
+[![Codecov test coverage](https://codecov.io/gh/dbosak01/sassy/branch/master/graph/badge.svg)](https://app.codecov.io/gh/dbosak01/sassy?branch=master)
 
 <!-- badges: end -->
 
@@ -83,10 +85,6 @@ If you need help with the **sassy** family of packages, the best place
 to turn to is the [r-sassy](https://sassy.r-sassy.org) web site.  
 This web site offers many examples, and full
 documentation on every function.  
-
-If you need additional help, please consult 
-[stackoverflow.com](https://stackoverflow.com).  The stackoverflow 
-community will be very willing to answer your questions.  
 
 If you want to look at the code for the **sassy** package, visit the
 github page [here](https://github.com/dbosak01/sassy).
