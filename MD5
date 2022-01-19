@@ -1,8 +1,8 @@
-8b11922def4c66785af7579b77bb66eb *DESCRIPTION
+74efa4635a8bc8500627d65be0f8d04a *DESCRIPTION
 9a435b7673c2c6259467298483fbd944 *NAMESPACE
-ddbf4ca96a2bd5d8410c3dbca0fd268d *NEWS.md
+74c756d826fd59a2891490050a4da65c *NEWS.md
 2e4992cd74c0c992beb049deaab0ffb4 *R/sassy.R
-18368d68ddbac28376a134ab9ca3bbc5 *README.md
+35961371bdbb467c4c320ed814f1ee9d *README.md
 7f8ff767a22cbc75a95bc8e107d405d7 *build/vignette.rds
 d28d1a0f097833d7dda3517f2dc98c5f *inst/doc/sassy-ae.R
 1a5f5abb39aaf68b63116902e88d519f *inst/doc/sassy-ae.Rmd
@@ -14,8 +14,8 @@ bf11f1b707d8556dfc575a8a58f97866 *inst/doc/sassy-disclaimers.Rmd
 01a08a4bd7140c47f8f563ac8b535877 *inst/doc/sassy-dm.Rmd
 e48ecb8d7f0cb07af68d616923eb55ec *inst/doc/sassy-dm.html
 04a4ddddbe40020bdbc3fd74aed6b5dc *inst/doc/sassy-faq.R
-2bff210bb3714470586f02346233162a *inst/doc/sassy-faq.Rmd
-83d0791bf137ba0cb56a867d10c1027a *inst/doc/sassy-faq.html
+f9b1a515b97e4f7f2a6aa1e814bbda2d *inst/doc/sassy-faq.Rmd
+cd448df82da2e8a6beb86c2a9465b39c *inst/doc/sassy-faq.html
 70353ed37e55a7a19a6d0ccc2c08e31a *inst/doc/sassy-figure.R
 05ebf798f5450933e14d319f498bd388 *inst/doc/sassy-figure.Rmd
 23da089f1f19dfa0aa189917978f9219 *inst/doc/sassy-figure.html
@@ -45,8 +45,11 @@ f7f505f4382c55fac5839ac6d41ba927 *man/images/ae2.png
 60692cf6ada670a0c33c3aed8871f567 *man/images/dm_fig1.png
 6d0da4db8ab39a15c19827c7876cdd6e *man/images/dm_fig2.png
 c67be25bddc63682e0f181e9b6e1cfe2 *man/images/dm_fig3.png
+9b1e205070af2ee39da9a0123ecff815 *man/images/favicon.ico
 34ec370e7683e0f25fd43e938c20d5b7 *man/images/listing.png
 10e69c030fc9fbe13058bfef066a4f98 *man/images/listing2.png
+ba8ca433c7f3292eb9fe8b6d3af1362f *man/images/logo.png
+b59c816bb2e720ac71a1a131c4397fe1 *man/images/logo_back.png
 7f9a4a0e6551021b90bc8ebe710334f4 *man/images/vital_signs.png
 de43bf06618fba82a2a39d02d3aed64a *man/images/vs_pg1.png
 b89871c3b7345336f1bda0b865423461 *man/images/vs_pg2.png
@@ -55,7 +58,7 @@ dcb812d5c5d3239ad9660ef52ad3405c *man/sassy.Rd
 1a5f5abb39aaf68b63116902e88d519f *vignettes/sassy-ae.Rmd
 bf11f1b707d8556dfc575a8a58f97866 *vignettes/sassy-disclaimers.Rmd
 01a08a4bd7140c47f8f563ac8b535877 *vignettes/sassy-dm.Rmd
-2bff210bb3714470586f02346233162a *vignettes/sassy-faq.Rmd
+f9b1a515b97e4f7f2a6aa1e814bbda2d *vignettes/sassy-faq.Rmd
 05ebf798f5450933e14d319f498bd388 *vignettes/sassy-figure.Rmd
 c07cb22367d531489c8e0c5e84e2d0af *vignettes/sassy-figureby.Rmd
 1373c91569f974a1fbd503fac94d144d *vignettes/sassy-listing.Rmd
