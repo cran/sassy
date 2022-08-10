@@ -4,10 +4,11 @@
 \encoding{UTF-8}
 \name{sassy}
 \alias{sassy}
-\title{sassy: Making R Easier for SAS® Programmers}
+\title{sassy: Making R Easier for Everyone}
 \description{
 The \strong{sassy} package is a meta-package that
-installs a set of functions that aim to make R easier for programmers
+installs a set of functions that aim to make R easier for everyone,
+especially programmers
 whose primary experience is with SAS® software.
 These functions provide the ability to create
 data libraries, format catalogs, data dictionaries, a traceable log, and
@@ -27,6 +28,8 @@ and apply formats to a data frame or vector.}
   \item {\code{\link[logr]{logr}}:}{ Generate a traceable log.}
   \item {\code{\link[reporter]{reporter}}:}{ Write reports and output
   in text, RTF, and PDF.}
+  \item {\code{common}:}{ A set of utility functions
+  shared across the \strong{sassy} family of packages.}
 }
 }
 
@@ -66,7 +69,7 @@ tbl <- create_table(sdtm.DM) \%>\%
 pth <- file.path(tmp, "output/l_dm.rtf") \%>\% put()
 
 # Define report object
-rpt <- create_report(pth, output_type = "RTF") \%>\%
+rpt <- create_report(pth, output_type = "RTF", font = "Courier") \%>\%
   page_header("Sponsor: Company", "Study: ABC") \%>\%
   titles("Listing 1.0", "SDTM Demographics") \%>\%
   add_content(tbl, align = "left") \%>\%
@@ -86,4 +89,7 @@ writeLines(readLines(lgpth, encoding = "UTF-8"))
 
 # View report
 # file.show(pth)
+
+# View log
+# file.show(lgpth)
 }

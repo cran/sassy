@@ -6,7 +6,6 @@ knitr::opts_chunk$set(
 
 ## ----eval=FALSE, echo=TRUE----------------------------------------------------
 #  library(sassy)
-#  library(magrittr)
 #  
 #  options("logr.autolog" = TRUE,
 #          "logr.notes" = FALSE)
@@ -31,17 +30,17 @@ knitr::opts_chunk$set(
 #  sep("Write Report")
 #  
 #  # Define table object
-#  tbl <- create_table(sdtm.DM) %>%
+#  tbl <- create_table(sdtm.DM) |>
 #    define(USUBJID, id_var = TRUE)
 #  
 #  # Construct report path
 #  pth <- file.path(tmp, "output/l_dm.rtf")
 #  
 #  # Define report object
-#  rpt <- create_report(pth, output_type = "RTF") %>%
-#    page_header("Sponsor: Company", "Study: ABC") %>%
-#    titles("Listing 1.0", "SDTM Demographics") %>%
-#    add_content(tbl, align = "left") %>%
+#  rpt <- create_report(pth, output_type = "RTF", font = "Courier") |>
+#    page_header("Sponsor: Company", "Study: ABC") |>
+#    titles("Listing 1.0", "SDTM Demographics") |>
+#    add_content(tbl, align = "left") |>
 #    page_footer(Sys.time(), "CONFIDENTIAL", "Page [pg] of [tpg]")
 #  
 #  # Write report to file system
@@ -55,4 +54,7 @@ knitr::opts_chunk$set(
 #  
 #  # View report
 #  # file.show(pth)
+#  
+#  # View log
+#  # file.show(lgpth)
 

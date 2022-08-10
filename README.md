@@ -10,7 +10,7 @@
 <!-- badges: end -->
 
 # Introduction to **sassy**
-<img src="./man/images/logo.png" align="left" height="138" style="margin-right: 20px;margin-bottom: 30px;"/>
+<img src="./man/images/logo_blue.png" align="left" height="138" style="margin-right: 20px;margin-bottom: 30px;"/>
 
 For SAS® programmers, encountering R for the first time can be quite a shock.
 
@@ -27,8 +27,9 @@ create a decent log!
 If you are in this state of shock, or have asked yourself any of the 
 above questions, then the **sassy** system is for you!
 
-The **sassy** system was designed to make R easier for SAS® programmers.
-The system brings many familiar SAS® concepts to R.  With the **sassy**
+The **sassy** system was designed to make data preparation and reporting in R 
+easier for everyone, but especially for SAS® programmers.
+The system brings many useful SAS® concepts to R.  With the **sassy**
 system you can:
 
 * Create a libname

@@ -36,9 +36,9 @@ knitr::opts_chunk$set(
 #  lib_load(sdtm)
 #  
 #  # Prepare data
-#  dm_mod <- sdtm.DM %>%
-#    select(USUBJID, SEX, AGE, ARM) %>%
-#    filter(ARM != "SCREEN FAILURE") %>%
+#  dm_mod <- sdtm.DM |>
+#    select(USUBJID, SEX, AGE, ARM) |>
+#    filter(ARM != "SCREEN FAILURE") |>
 #    datastep({
 #  
 #       if (AGE >= 18 & AGE <= 24)
@@ -50,12 +50,12 @@ knitr::opts_chunk$set(
 #       else if (AGE >= 65)
 #         AGECAT <- ">= 65"
 #  
-#     }) %>% put()
+#     }) |> put()
 #  
 #  put("Get population counts")
-#  arm_pop <- count(dm_mod, ARM) %>% put()
-#  sex_pop <- count(dm_mod, SEX) %>% put()
-#  agecat_pop <- count(dm_mod, AGECAT) %>% put()
+#  arm_pop <- count(dm_mod, ARM) |> put()
+#  sex_pop <- count(dm_mod, SEX) |> put()
+#  agecat_pop <- count(dm_mod, AGECAT) |> put()
 #  
 #  # Convert agecat to factor so rows will sort correctly
 #  agecat_pop$AGECAT <- factor(agecat_pop$AGECAT, levels = c("18 to 24",
@@ -63,7 +63,7 @@ knitr::opts_chunk$set(
 #                                                            "45 to 64",
 #                                                            ">= 65"))
 #  # Sort agecat
-#  agecat_pop <- agecat_pop %>% arrange(AGECAT)
+#  agecat_pop <- agecat_pop |> arrange(AGECAT)
 #  
 #  
 #  # Create Plots ------------------------------------------------------------
@@ -94,22 +94,25 @@ knitr::opts_chunk$set(
 #  pth <- file.path(tmp, "output/example3.rtf")
 #  
 #  
-#  page1 <- create_plot(plt1, 4.5, 7) %>%
-#    titles("Figure 1.1", "Distribution of Subjects by Treatment Group")
+#  page1 <- create_plot(plt1, 4.5, 7) |>
+#    titles("Figure 1.1", "Distribution of Subjects by Treatment Group",
+#           bold = TRUE, font_size = 11)
 #  
-#  page2 <- create_plot(plt2, 4.5, 7) %>%
-#    titles("Figure 1.2", "Distribution of Subjects by Biological Sex")
+#  page2 <- create_plot(plt2, 4.5, 7) |>
+#    titles("Figure 1.2", "Distribution of Subjects by Biological Sex",
+#           bold = TRUE, font_size = 11)
 #  
-#  page3 <- create_plot(plt3, 4.5, 7) %>%
-#    titles("Figure 1.2", "Distribution of Subjects by Age Category")
+#  page3 <- create_plot(plt3, 4.5, 7) |>
+#    titles("Figure 1.2", "Distribution of Subjects by Age Category",
+#           bold = TRUE, font_size = 11)
 #  
-#  rpt <- create_report(pth, output_type = "RTF") %>%
-#    set_margins(top = 1, bottom = 1) %>%
-#    page_header("Sponsor: Company", "Study: ABC") %>%
-#    add_content(page1) %>%
-#    add_content(page2) %>%
-#    add_content(page3) %>%
-#    footnotes("Program: DM_Figure.R") %>%
+#  rpt <- create_report(pth, output_type = "RTF", font = "Arial") |>
+#    set_margins(top = 1, bottom = 1) |>
+#    page_header("Sponsor: Company", "Study: ABC") |>
+#    add_content(page1) |>
+#    add_content(page2) |>
+#    add_content(page3) |>
+#    footnotes("Program: DM_Figure.R") |>
 #    page_footer(paste0("Date Produced: ", fapply(Sys.time(), "%d%b%y %H:%M")),
 #                right = "Page [pg] of [tpg]")
 #  

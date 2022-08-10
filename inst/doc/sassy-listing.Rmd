@@ -40,7 +40,6 @@ Note the following about this example:
 
 ```{r eval=FALSE, echo=TRUE}    
 library(sassy)
-library(magrittr)
 
 options("logr.autolog" = TRUE, 
         "logr.notes" = FALSE)
@@ -65,17 +64,17 @@ lib_load(sdtm)
 sep("Write Report")
 
 # Define table object
-tbl <- create_table(sdtm.DM) %>% 
+tbl <- create_table(sdtm.DM) |> 
   define(USUBJID, id_var = TRUE)
 
 # Construct report path
 pth <- file.path(tmp, "output/l_dm.rtf") 
 
 # Define report object
-rpt <- create_report(pth, output_type = "RTF") %>% 
-  page_header("Sponsor: Company", "Study: ABC") %>% 
-  titles("Listing 1.0", "SDTM Demographics") %>% 
-  add_content(tbl, align = "left") %>% 
+rpt <- create_report(pth, output_type = "RTF", font = "Courier") |> 
+  page_header("Sponsor: Company", "Study: ABC") |> 
+  titles("Listing 1.0", "SDTM Demographics") |> 
+  add_content(tbl, align = "left") |> 
   page_footer(Sys.time(), "CONFIDENTIAL", "Page [pg] of [tpg]")
 
 # Write report to file system
@@ -89,7 +88,18 @@ log_close()
 
 # View report
 # file.show(pth)
+
+# View log
+# file.show(lgpth)
 ```
+
+#### Output
+
+Here is an image of the first page of the RTF report produced by the
+above listing example:
+
+<img src="../man/images/listing.png" align="center" />
+
 
 #### Log
 
@@ -158,12 +168,6 @@ Log Elapsed Time: 0 00:00:07
 
 
 ```
-#### Output
-
-Here is an image of the first page of the RTF report produced by the
-above listing example:
-
-<img src="../man/images/listing.png" align="center" />
 
 
 Next: [Example 2: DM Table](sassy-dm.html)
