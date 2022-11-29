@@ -59,8 +59,7 @@ knitr::opts_chunk$set(
 #        BSTRESN = VSSTRESN
 #  
 #    }) |>
-#    ungroup() |>
-#    put()
+#    ungroup()
 #  
 #  put("Get population counts")
 #  pop_A <- prep |> select(USUBJID, GRP) |> filter(GRP == "A_BASE") |>

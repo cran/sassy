@@ -1,7 +1,7 @@
 Package: sassy
 Type: Package
 Title: Makes 'R' Easier for Everyone
-Version: 1.0.8
+Version: 1.1.0
 Author: David J. Bosak
 Maintainer: David Bosak <dbosak01@gmail.com>
 Description: A meta-package that aims to make 'R' easier for everyone, 
@@ -9,18 +9,18 @@ Description: A meta-package that aims to make 'R' easier for everyone,
     This set of packages brings many useful concepts to 'R', including
     data libraries, data dictionaries, formats 
     and format catalogs, a data step, and a traceable log.  The 'flagship'
-    package is a reporting package that can output in text, rich text, 'PDF' and 
-    'HTML' file formats.
-License: CC BY-NC 4.0
+    package is a reporting package that can output in text, rich text, 'PDF', 
+    'HTML', and 'DOCX' file formats.
+License: CC0
 Encoding: UTF-8
 Depends: R (>= 3.6.0)
 URL: https://r-sassy.org
 BugReports: https://github.com/dbosak01/sassy/issues
 Suggests: testthat, knitr, rmarkdown, tidylog, magrittr, covr
 Imports: common, logr, fmtr, libr, reporter
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2022-08-10 17:52:23 UTC; dbosa
+Packaged: 2022-11-29 00:37:46 UTC; dbosa
 Repository: CRAN
-Date/Publication: 2022-08-10 18:20:02 UTC
+Date/Publication: 2022-11-29 01:10:02 UTC

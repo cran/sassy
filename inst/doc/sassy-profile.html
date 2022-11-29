@@ -120,13 +120,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -334,13 +341,18 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
+<p>Below is an example showing a patient profile report. Every
+organization has their own way of presenting patient profiles. This is
+an example of a “master and detail” type of report.</p>
 <div id="program" class="section level2">
 <h2>Program</h2>
-<p>Below is complete example showing a patient profile report. This
-example uses a loop to append separate tables for each patient. The
-profile for each patient is shown on a separate page. This example also
-makes extensive use of user-defined formats from the
-<strong>fmtr</strong> package.</p>
+<p>Note the following about this example:</p>
+<ul>
+<li>A loop is used to append separate tables for each patient.</li>
+<li>The profile for each patient is shown on a separate page.</li>
+<li>The program makes extensive use of user-defined formats from the
+<strong>fmtr</strong> package.</li>
+</ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sassy)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -397,31 +409,31 @@ makes extensive use of user-defined formats from the
 <span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>sevfmt <span class="ot">&lt;-</span> <span class="fu">value</span>(<span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;MODERATE&quot;</span>, <span class="st">&quot;Moderate&quot;</span>),</span>
 <span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;SEVERE&quot;</span>, <span class="st">&quot;Severe&quot;</span>),</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;MILD&quot;</span>, <span class="st">&quot;Mild&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;MILD&quot;</span>, <span class="st">&quot;Mild&quot;</span>))</span>
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>relfmt <span class="ot">&lt;-</span> <span class="fu">value</span>(<span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;RELATED&quot;</span>, <span class="st">&quot;Yes&quot;</span>),</span>
 <span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;NOT RELATED&quot;</span>, <span class="st">&quot;No&quot;</span>),</span>
 <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;PROBABLY RELATED&quot;</span>, <span class="st">&quot;Probably&quot;</span>),</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;POSSIBLY RELATED&quot;</span>, <span class="st">&quot;Possibly&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;POSSIBLY RELATED&quot;</span>, <span class="st">&quot;Possibly&quot;</span>)) </span>
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>serfmt <span class="ot">&lt;-</span> <span class="fu">value</span>(<span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;N&quot;</span>, <span class="st">&quot;No&quot;</span>),</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>, <span class="st">&quot;Yes&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;Y&quot;</span>, <span class="st">&quot;Yes&quot;</span>)) </span>
 <span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>sexfmt <span class="ot">&lt;-</span> <span class="fu">value</span>(<span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;M&quot;</span>, <span class="st">&quot;Male&quot;</span>),</span>
 <span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;F&quot;</span>, <span class="st">&quot;Female&quot;</span>),</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(<span class="cn">TRUE</span>, <span class="st">&quot;Unknown&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(<span class="cn">TRUE</span>, <span class="st">&quot;Unknown&quot;</span>)) </span>
 <span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>racefmt <span class="ot">&lt;-</span> <span class="fu">value</span>(<span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;WHITE&quot;</span>, <span class="st">&quot;White&quot;</span>),</span>
 <span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;BLACK OR AFRICAN AMERICAN&quot;</span>, <span class="st">&quot;Black&quot;</span>),</span>
 <span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;UNKNOWN&quot;</span>, <span class="st">&quot;Unknown&quot;</span>),</span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;ASIAN&quot;</span>, <span class="st">&quot;Asian&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;ASIAN&quot;</span>, <span class="st">&quot;Asian&quot;</span>)) </span>
 <span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>armfmt <span class="ot">&lt;-</span> <span class="fu">value</span>(<span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;ARM A&quot;</span>, <span class="st">&quot;Placebo&quot;</span>),</span>
 <span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;ARM B&quot;</span>, <span class="st">&quot;Dose 50mg&quot;</span>),</span>
 <span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;ARM C&quot;</span>, <span class="st">&quot;Dose 100mg&quot;</span>),</span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;ARM D&quot;</span>, <span class="st">&quot;Competitor&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>                <span class="fu">condition</span>(x <span class="sc">==</span> <span class="st">&quot;ARM D&quot;</span>, <span class="st">&quot;Competitor&quot;</span>)) </span>
 <span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>                 </span>
 <span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="fu">formats</span>(sdtm.DM) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">SEX =</span> sexfmt, </span>
@@ -783,6 +795,7 @@ Log End Time: 2022-07-21 22:31:15
 Log Elapsed Time: 0 00:00:05
 =========================================================================
 </code></pre>
+<p>Next: <a href="sassy-forest.html">Example 9: Forest Plot</a></p>
 </div>
 
 

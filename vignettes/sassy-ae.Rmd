@@ -1,8 +1,8 @@
 ---
-title: "Example 4: AE Table"
+title: "Example 4: Adverse Events Table"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example 4: AE Table}
+  %\VignetteIndexEntry{Example 4: Adverse Events Table}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,14 +13,11 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-### Create an Adverse Events Table
-
 The fourth example produces an Adverse Events table by severity, with
 treatment groups on separate pages. The report shows statistics for All 
 Adverse Events and System Organ Class/Preferred Term.   
 
-#### Program
+## Program
 
 Note the following about this example:
 
@@ -249,17 +246,16 @@ log_close()
 
 ```
 
-#### Output
+## Output
 
-Here are the first four pages of the output report:
+Here are the first three pages of the output report:
 
 <img src="../man/images/ae1.png" align="center" />
 <img src="../man/images/ae2.png" align="center" />
 <img src="../man/images/ae3.png" align="center" />
-<img src="../man/images/ae4.png" align="center" />
 
 
-#### Log
+## Log
 
 Here is part of the log from the above example:
 
@@ -489,4 +485,4 @@ Log Elapsed Time: 0 00:00:03
 
 ```
 
-Next: [Example 5: VS Table](sassy-vs.html)
+Next: [Example 5: Vital Signs Table](sassy-vs.html)

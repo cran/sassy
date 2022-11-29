@@ -110,6 +110,35 @@ Create a patient profile report.
 </a>
 <br>
 
+* **[Example 9](sassy-forest.html)**: 
+Create a figure with a forest plot.
+<a href="sassy-forest.html">
+<img src="../man/images/forest.png" align="left" />
+</a>
+<br>
+
+* **[Example 10](sassy-ds.html)**: 
+Create a subject disposition table.
+<a href="sassy-ds.html">
+<img src="../man/images/disposition.png" align="left" />
+</a>
+<br>
+
+* **[Example 11](sassy-plisting.html)**: 
+Create a subject listing with vital signs by visit.
+<a href="sassy-plisting.html">
+<img src="../man/images/plisting.png" align="left" />
+</a>
+<br>
+
+* **[Example 12](sassy-pfigure.html)**: 
+Create a combined figure of age groups by treatment.
+<a href="sassy-pfigure.html">
+<img src="../man/images/pfigure.png" align="left" />
+</a>
+<br>
+
+
 Once you review these examples, please proceed to the package links above to
 explore the system further!
 

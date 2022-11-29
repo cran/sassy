@@ -50,7 +50,7 @@ knitr::opts_chunk$set(
 #       else if (AGE >= 65)
 #         AGECAT <- ">= 65"
 #  
-#     }) |> put()
+#     })
 #  
 #  put("Get ARM population counts")
 #  arm_pop <- count(dm_mod, ARM) |> deframe() |> put()
@@ -159,7 +159,7 @@ knitr::opts_chunk$set(
 #  
 #  pth <- file.path(tmp, "output/example2.rtf")
 #  
-#  rpt <- create_report(pth, output_type = "DOCX", font = "Arial") |>
+#  rpt <- create_report(pth, output_type = "RTF", font = "Arial") |>
 #    set_margins(top = 1, bottom = 1) |>
 #    page_header("Sponsor: Company", "Study: ABC") |>
 #    titles("Table 1.0", "Analysis of Demographic Characteristics",

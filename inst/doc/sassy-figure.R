@@ -50,7 +50,7 @@ knitr::opts_chunk$set(
 #       else if (AGE >= 65)
 #         AGECAT <- ">= 65"
 #  
-#     }) |> put()
+#     })
 #  
 #  put("Get population counts")
 #  arm_pop <- count(dm_mod, ARM) |> put()

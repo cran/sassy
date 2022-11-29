@@ -1,8 +1,8 @@
 ---
-title: "Example 2: DM Table"
+title: "Example 2: Demographics Table"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example 2: DM Table}
+  %\VignetteIndexEntry{Example 2: Demographics Table}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,13 +13,10 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-### Create a Demographics Table of Summary Statistics
-
 The second example produces a demographics summary table of selected variables. 
 The report shows statistics for each of the four treatment groups.   
 
-#### Program
+## Program
 
 Note the following about this example:
 
@@ -82,7 +79,7 @@ dm_mod <- sdtm.DM |>
      else if (AGE >= 65)
        AGECAT <- ">= 65"
      
-   }) |> put()
+   }) 
 
 put("Get ARM population counts")
 arm_pop <- count(dm_mod, ARM) |> deframe() |> put()
@@ -191,7 +188,7 @@ tbl <- create_table(final, first_row_blank = TRUE,
 
 pth <- file.path(tmp, "output/example2.rtf")
 
-rpt <- create_report(pth, output_type = "DOCX", font = "Arial") |> 
+rpt <- create_report(pth, output_type = "RTF", font = "Arial") |> 
   set_margins(top = 1, bottom = 1) |> 
   page_header("Sponsor: Company", "Study: ABC") |> 
   titles("Table 1.0", "Analysis of Demographic Characteristics", 
@@ -219,14 +216,14 @@ log_close()
 
 ```
 
-#### Output
+## Output
 
 Here is the output report:
 
 <img src="../man/images/dm.png" align="center" />
 
 
-#### Log
+## Log
 
 And here is the log:
 
