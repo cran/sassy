@@ -23,6 +23,7 @@
 #'   in TXT, RTF, PDF, HTML, and DOCX.}
 #'   \item {\code{common}:}{ A set of utility functions
 #'   shared across the \strong{sassy} family of packages.}
+#'   \item {\code{procs}:}{ A package to simulate frequently used SAS® procedures.}
 #' }
 #' @examples
 #' #########################################################
@@ -75,21 +76,21 @@
 #' # Close log
 #' log_close()
 #'
-#' # Print log to console
-#' writeLines(readLines(lgpth, encoding = "UTF-8"))
-#'
 #' # View report
 #' # file.show(pth)
 #'
 #' # View log
 #' # file.show(lgpth)
 #' @docType package
+#' @keywords internal
 #' @name sassy
+#' @aliases sassy-package
 #' @import common
 #' @import logr
 #' @import fmtr
 #' @import libr
 #' @import reporter
+#' @import procs
 NULL
 
 
@@ -101,5 +102,13 @@ NULL
   do.call("library", list("fmtr"))
   do.call("library", list("libr"))
   do.call("library", list("reporter"))
+  do.call("library", list("procs"))
 
 }
+
+
+
+
+
+
+

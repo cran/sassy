@@ -5,52 +5,53 @@ knitr::opts_chunk$set(
 )
 
 ## ----eval=FALSE, echo=TRUE----------------------------------------------------
-#  library(tidyverse)
 #  library(sassy)
-#  
-#  # Prepare Log -------------------------------------------------------------
+#  library(stringr)
 #  
 #  options("logr.autolog" = TRUE,
-#          "logr.notes" = FALSE)
+#          "logr.notes" = FALSE,
+#          "logr.on" = TRUE,
+#          "procs.print" = FALSE)
 #  
-#  # Get path to temp directory
+#  # Get temp directory
 #  tmp <- tempdir()
 #  
-#  # Get sample data directory
+#  # Open log
+#  lf <- log_open(file.path(tmp, "example10.log"))
+#  
+#  # Get data
 #  dir <- system.file("extdata", package = "sassy")
 #  
-#  # Open log
-#  lgpth <- log_open(file.path(tmp, "example10.log"))
 #  
 #  
 #  # Load and Prepare Data ---------------------------------------------------
 #  
 #  sep("Prepare Data")
 #  
-#  # Define data library
+#  put("Define data library")
 #  libname(sdtm, dir, "csv")
 #  
-#  # Loads data into workspace
+#  put("Loads data into workspace")
 #  lib_load(sdtm)
 #  
-#  # Prepare data
-#  dm_mod <- sdtm.DM |>
-#    select(USUBJID, ARM) |>
-#    filter(ARM != "SCREEN FAILURE") |> put()
+#  put("Prepare DM data")
+#  datastep(sdtm.DM, keep = v(USUBJID, ARM),
+#           where = expression(ARM != "SCREEN FAILURE"), {}) -> dm_mod
 #  
+#  put("Prepare DS data")
+#  datastep(sdtm.DS, keep = v(USUBJID, DSTERM, DSDECOD, DSCAT),
+#           where = expression(DSCAT != "PROTOCOL MILESTONE"), {}) -> ds_mod
 #  
-#  ds_mod <- sdtm.DS |>
-#    select(USUBJID, DSTERM, DSDECOD, DSCAT) |>
-#    filter(DSCAT != "PROTOCOL MILESTONE")
+#  put("Join DM with DS to get ARMs on DS")
+#  datastep(dm_mod, merge = ds_mod, merge_by = USUBJID, {}) -> dmds
 #  
-#  put("Join DS to DM")
-#  dmds <- inner_join(dm_mod, ds_mod)
+#  put("Change ARM to factor to assist with sparse data")
+#  dmds$ARM <- factor(dmds$ARM, levels = c("ARM A", "ARM B", "ARM C", "ARM D"))
 #  
 #  
 #  put("Get ARM population counts")
-#  arm_pop <- count(dm_mod, ARM) |> deframe() |> put()
-#  
-#  
+#  proc_freq(dm_mod, tables = ARM, output = long,
+#            options = v(nonobs, nopercent)) -> arm_pop
 #  
 #  # Prepare formats ---------------------------------------------------------
 #  
@@ -79,86 +80,101 @@ knitr::opts_chunk$set(
 #  
 #  # Disposition Groups ------------------------------------------------------
 #  
-#  put("Get group counts")
-#  grps <- dmds |> select(ARM, DSDECOD) |>
-#    group_by(ARM, DSDECOD) |>
-#    summarize(n = n()) |>
-#    ungroup() |>
-#    pivot_wider(names_from = ARM,
-#                values_from = n,
-#                values_fill = 0) |>
-#    transmute(group = ifelse(DSDECOD == "NON-COMPLIANCE WITH STUDY DRUG", "NONCOMPLIANCE", DSDECOD),
-#              cat = NA,
-#              catseq = 1,
-#              `ARM A` = fmt_cnt_pct(`ARM A`, arm_pop["ARM A"]),
-#              `ARM B` = fmt_cnt_pct(`ARM B`, arm_pop["ARM B"]),
-#              `ARM C` = fmt_cnt_pct(`ARM C`, arm_pop["ARM C"]),
-#              `ARM D` = fmt_cnt_pct(`ARM D`, arm_pop["ARM D"])) |> put()
+#  put("Create vector of final dataframe columns")
+#  cols <- v(group, cat, catseq, `ARM A`, `ARM B`, `ARM C`, `ARM D`) |> put()
 #  
+#  put("Get group counts")
+#  proc_freq(dmds, tables = DSDECOD, by = ARM) |>
+#    datastep(keep = v(BY, CAT, CNTPCT), {
+#  
+#      CNTPCT <- fmt_cnt_pct(CNT, arm_pop[[BY]])
+#  
+#    }) |>
+#    proc_transpose(var = CNTPCT, by = CAT, id = BY) |>
+#    datastep(keep = cols,
+#      {
+#  
+#      group <- ifelse(CAT == "NON-COMPLIANCE WITH STUDY DRUG", "NONCOMPLIANCE", CAT)
+#      cat = NA
+#      catseq = 1
+#  
+#    }) -> grps
 #  
 #  
 #  # Disposition Subgroups ----------------------------------------------------
 #  
 #  put("Pull out subjects who completed study.")
-#  cmplt <- dmds |> filter(DSDECOD == "COMPLETED") |>
-#    mutate(TERMDECOD = fapply(DSTERM, complete_fmt)) |>
-#    group_by(ARM, DSDECOD, TERMDECOD) |>
-#    summarize(n = n()) |>
-#    ungroup() |>
-#    pivot_wider(names_from = ARM,
-#                values_from = n,
-#                values_fill = 0) |>
-#    transmute(group = "COMPLETED",
-#              cat = TERMDECOD,
-#              catseq = 2,
-#              `ARM A` = fmt_cnt_pct(`ARM A`, arm_pop["ARM A"]),
-#              `ARM B` = fmt_cnt_pct(`ARM B`, arm_pop["ARM B"]),
-#              `ARM C` = fmt_cnt_pct(`ARM C`, arm_pop["ARM C"]),
-#              `ARM D` = fmt_cnt_pct(`ARM D`, arm_pop["ARM D"])) |> put()
+#  datastep(dmds, where = expression(DSDECOD == "COMPLETED"),
+#           {
+#             TERMDECOD <- fapply(DSTERM, complete_fmt)
+#  
+#           }) |>
+#    proc_freq(tables = v(DSDECOD * TERMDECOD), by = ARM) |>
+#    datastep(keep = v(BY, CAT1, CAT2, CNTPCT),
+#      {
+#  
+#        CNTPCT <- fmt_cnt_pct(CNT, arm_pop[[BY]])
+#  
+#      }) |>
+#    proc_transpose(var = CNTPCT, by = v(CAT1, CAT2), id = BY) |>
+#    datastep(keep = cols,
+#      {
+#        group = CAT1
+#        cat = CAT2
+#        catseq = 2
+#      }) -> cmplt
 #  
 #  
 #  put("Pull out subjects who were non-compliant")
-#  noncompl1 <- dmds |> filter(DSDECOD == "NON-COMPLIANCE WITH STUDY DRUG") |>
-#    mutate(TERMDECOD = fapply(DSTERM, noncomp_fmt)) |>
-#    group_by(ARM, DSDECOD, TERMDECOD) |>
-#    summarize(n = n()) |>
-#    ungroup() |>
-#    pivot_wider(names_from = ARM,
-#                values_from = n,
-#                values_fill = 0)
+#  datastep(dmds, where = expression(DSDECOD == "NON-COMPLIANCE WITH STUDY DRUG"),
+#           {
+#             TERMDECOD <- fapply(DSTERM, noncomp_fmt)
 #  
-#  nms <- names(noncompl1)
+#           }) |>
+#    proc_freq(tables = v(DSDECOD * TERMDECOD), by = ARM) |>
+#    datastep(keep = v(BY, CAT1, CAT2, CNTPCT),
+#             {
 #  
-#  noncompl2 <- noncompl1 |>
-#    transmute(group = "NONCOMPLIANCE",
-#              cat = TERMDECOD,
-#              catseq = 2,
-#              `ARM A` = ifelse("ARM A" %in% nms, fmt_cnt_pct(`ARM A`, arm_pop["ARM A"]), "0 (  0.0%)"),
-#              `ARM B` = ifelse("ARM B" %in% nms, fmt_cnt_pct(`ARM B`, arm_pop["ARM B"]), "0 (  0.0%)"),
-#              `ARM C` = ifelse("ARM C" %in% nms, fmt_cnt_pct(`ARM C`, arm_pop["ARM C"]), "0 (  0.0%)"),
-#              `ARM D` = ifelse("ARM D" %in% nms, fmt_cnt_pct(`ARM D`, arm_pop["ARM D"]), "0 (  0.0%)")) |> put()
+#               CNTPCT <- fmt_cnt_pct(CNT, arm_pop[[BY]])
+#  
+#             }) |>
+#    proc_transpose(var = CNTPCT, by = v(CAT1, CAT2), id = BY) |>
+#    datastep(keep = cols,
+#             {
+#               group = "NONCOMPLIANCE"
+#               cat = CAT2
+#               catseq = 2
+#             }) -> noncompl
+#  
 #  
 #  put("Pull out subjects who terminated early")
-#  earlyterm <- dmds |> filter(DSDECOD == "OTHER") |>
-#    mutate(TERMDECOD = fapply(DSTERM, term_fmt)) |>
-#    group_by(ARM, DSDECOD, TERMDECOD) |>
-#    summarize(n = n()) |>
-#    ungroup() |>
-#    pivot_wider(names_from = ARM,
-#                values_from = n,
-#                values_fill = 0) |>
-#    transmute(group = "OTHER",
-#              cat = TERMDECOD,
-#              catseq = 2,
-#              `ARM A` = fmt_cnt_pct(`ARM A`, arm_pop["ARM A"]),
-#              `ARM B` = fmt_cnt_pct(`ARM B`, arm_pop["ARM B"]),
-#              `ARM C` = fmt_cnt_pct(`ARM C`, arm_pop["ARM C"]),
-#              `ARM D` = fmt_cnt_pct(`ARM D`, arm_pop["ARM D"])) |> put()
+#  datastep(dmds, where = expression(DSDECOD == "OTHER"),
+#           {
+#             TERMDECOD <- fapply(DSTERM, term_fmt)
+#  
+#           }) |>
+#    proc_freq(tables = v(DSDECOD * TERMDECOD), by = ARM) |>
+#    datastep(keep = v(BY, CAT1, CAT2, CNTPCT),
+#             {
+#  
+#               CNTPCT <- fmt_cnt_pct(CNT, arm_pop[[BY]])
+#  
+#             }) |>
+#    proc_transpose(var = CNTPCT, by = v(CAT1, CAT2), id = BY) |>
+#    datastep(keep = cols,
+#             {
+#               group = "OTHER"
+#               cat = CAT2
+#               catseq = 2
+#             }) -> earlyterm
+#  
 #  
 #  put("Combine blocks into final data frame")
-#  final <- bind_rows(grps, cmplt, noncompl2, earlyterm) |>
-#    arrange(group, catseq, cat) |>
-#    mutate(lblind = ifelse(is.na(cat), TRUE, FALSE)) |> put()
+#  datastep(grps, set = list(cmplt, noncompl, earlyterm),
+#      {
+#        lblind <- ifelse(is.na(cat), TRUE, FALSE)
+#      }) |>
+#    proc_sort(by = v(group, catseq, cat)) -> final
 #  
 #  
 #  # Report ------------------------------------------------------------------
@@ -185,8 +201,8 @@ knitr::opts_chunk$set(
 #           "Safety Population", bold = TRUE, font_size = 11,
 #           borders = "outside", blank_row = "none") |>
 #    footnotes("Program: DS_Table.R",
-#            "NOTE: Denominator based on number of non-missing responses.",
-#            borders = "outside", blank_row = "none")
+#              "NOTE: Denominator based on number of non-missing responses.",
+#              borders = "outside", blank_row = "none")
 #  
 #  pth <- file.path(tmp, "example10.pdf")
 #  
@@ -208,5 +224,6 @@ knitr::opts_chunk$set(
 #  
 #  # Uncomment to view files
 #  # file.show(pth)
-#  # file.show(lgpth)
+#  # file.show(lf)
+#  
 

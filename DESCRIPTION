@@ -1,7 +1,7 @@
 Package: sassy
 Type: Package
 Title: Makes 'R' Easier for Everyone
-Version: 1.1.0
+Version: 1.2.0
 Author: David J. Bosak
 Maintainer: David Bosak <dbosak01@gmail.com>
 Description: A meta-package that aims to make 'R' easier for everyone, 
@@ -16,11 +16,14 @@ Encoding: UTF-8
 Depends: R (>= 3.6.0)
 URL: https://r-sassy.org
 BugReports: https://github.com/dbosak01/sassy/issues
-Suggests: testthat, knitr, rmarkdown, tidylog, magrittr, covr
-Imports: common, logr, fmtr, libr, reporter
-RoxygenNote: 7.2.1
+Suggests: testthat (>= 3.0.0), knitr, rmarkdown, tidylog, magrittr,
+        covr
+Imports: common, logr, fmtr, libr, reporter, procs, datasets, tools,
+        utils
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
+Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2022-11-29 00:37:46 UTC; dbosa
+Packaged: 2023-09-07 02:40:59 UTC; dbosa
 Repository: CRAN
-Date/Publication: 2022-11-29 01:10:02 UTC
+Date/Publication: 2023-09-07 03:00:02 UTC

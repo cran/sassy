@@ -20,13 +20,13 @@ The package brings several useful SAS® concepts to R, including
 data libraries, formats and format catalogs, data dictionaries, a data step,
 a traceable log, and a reporting package with a variety of printable report types.
 
-The **sassy** family of packages is meant to compliment the 
-**tidyverse**.  While the **tidyverse** focuses mainly on data manipulation
-and development tools, the **sassy** packages are focused more on 
-formatting and reporting. For most projects, it is expected that users will 
-load both the **tidyverse** and **sassy** meta-packages.  Between these two, 
-the user will typically have everything they need to easily prepare and 
-report on their data.  
+The core of the **sassy** system is the **procs** package.  This package contains 
+replications of several SAS® procedures: `proc_freq()`, `proc_means()`,
+`proc_transpose()`, and `proc_sort()`. Combined with the `datastep()` function
+from the **libr** package, you can write code in R that very much resembles
+what you would write in SAS®. These functions provide a higher-level programming
+interface than is typically found in R, and can therefore make your analysis
+more efficient and productive.
 
 ### Included Packages
 The **sassy** meta-package contains the following packages:
@@ -42,6 +42,9 @@ ability to write reports in TXT, RTF, PDF, and DOCX file formats
 * **[common](https://common.r-sassy.org)**: A set of utility functions
 shared across the **sassy** family of packages, and often 
 useful in their own right. 
+* **[procs](https://procs.r-sassy.org)**: A set of functions that simulate
+SAS® procedures.  Package includes simulations of PROC FREQ, PROC MEANS,
+PROC TRANSPOSE, PROC SORT, and PROC PRINT.
 
 The above links will take you into the respective packages for a deep
 dive on their capabilities.  

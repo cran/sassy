@@ -5,7 +5,6 @@ knitr::opts_chunk$set(
 )
 
 ## ----eval=FALSE, echo=TRUE----------------------------------------------------
-#  library(tidyverse)
 #  library(sassy)
 #  
 #  # Prepare Log -------------------------------------------------------------
@@ -80,12 +79,9 @@ knitr::opts_chunk$set(
 #           }) -> vso
 #  
 #  put("Pivot vitals signs")
-#  vsot <- vso |>
-#    group_by(USUBJID, VISITNUM, VISIT) |>
-#    pivot_wider(names_from = VSTESTCD,
-#                values_from = VSCOMB) |>
-#    ungroup() |>
-#    arrange(USUBJID, VISITNUM) |> put()
+#  proc_transpose(vso, id = VSTESTCD, var = VSCOMB,
+#                 by = v(USUBJID, VISITNUM, VISIT)) |>
+#    proc_sort(by = v(USUBJID, VISITNUM)) -> vsot
 #  
 #  
 #  put("Assign and apply formats")

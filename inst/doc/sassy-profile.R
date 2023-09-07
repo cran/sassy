@@ -8,7 +8,6 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 
 
 ## ----eval=FALSE, echo=TRUE----------------------------------------------------
-#  library(dplyr)
 #  library(sassy)
 #  
 #  options("logr.notes" = FALSE,
@@ -27,10 +26,10 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  # Get sample data path
 #  pth <- system.file("extdata", package = "sassy")
 #  
-#  
+#  put("Open data library")
 #  libname(sdtm, pth, "csv")
 #  
-#  
+#  put("Load data into environment")
 #  lib_load(sdtm)
 #  
 #  
@@ -47,7 +46,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #                          RACE = "Race",
 #                          BRTHDTC = "Birth Date",
 #                          ARMCD = "Treatment Code"
-#                          ) |> put()
+#  ) |> put()
 #  put("AE labels")
 #  labels(sdtm.AE) <- list(AESTDTC = "Event Start Date",
 #                          AEENDTC = "Event Stop Date",
@@ -104,16 +103,18 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  
 #  sep("Prepare data")
 #  
-#  dm <- sdtm.DM |>
-#    select(USUBJID, ARM, SITEID, SUBJID, SEX, AGE, RACE, BRTHDTC) |> put()
+#  put("Select desired columns from DM dataset")
+#  datastep(sdtm.DM,
+#           keep = v(USUBJID, ARM, SITEID, SUBJID, SEX, AGE, RACE, BRTHDTC), {}) -> dm
+#  
 #  
 #  # Split dm data by subject id
 #  dmlst <- split(dm, factor(dm$USUBJID))
 #  
-#  
-#  ae <- sdtm.AE |>
-#    select(USUBJID, AESTDTC, AEENDTC, AESTDY,
-#           AEENDY, AESOC, AESEV, AESER, AEREL) |> put()
+#  put("Select desired columns from AE dataset")
+#  datastep(sdtm.AE,
+#           keep = v(USUBJID, AESTDTC, AEENDTC, AESTDY,
+#                    AEENDY, AESOC, AESEV, AESER, AEREL), {}) -> ae
 #  
 #  # Split ae data by subject id
 #  aelst <- split(ae, factor(ae$USUBJID))
@@ -153,7 +154,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  
 #    # Append table content
 #    rpt <- rpt |>  add_content(tb1, page_break = FALSE) |>
-#            add_content(tb2)
+#      add_content(tb2)
 #  
 #  }
 #  

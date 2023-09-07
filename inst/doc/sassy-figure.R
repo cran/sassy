@@ -5,7 +5,7 @@ knitr::opts_chunk$set(
 )
 
 ## ----eval=FALSE, echo=TRUE----------------------------------------------------
-#  library(tidyverse)
+#  library(ggplot2)
 #  library(sassy)
 #  
 #  
@@ -35,53 +35,56 @@ knitr::opts_chunk$set(
 #  # Loads data into workspace
 #  lib_load(sdtm)
 #  
-#  # Prepare data
-#  dm_mod <- sdtm.DM |>
-#    select(USUBJID, SEX, AGE, ARM) |>
-#    filter(ARM != "SCREEN FAILURE") |>
-#    datastep({
 #  
-#       if (AGE >= 18 & AGE <= 24)
-#         AGECAT = "18 to 24"
-#       else if (AGE >= 25 & AGE <= 44)
-#         AGECAT = "25 to 44"
-#       else if (AGE >= 45 & AGE <= 64)
-#         AGECAT <- "45 to 64"
-#       else if (AGE >= 65)
-#         AGECAT <- ">= 65"
+#  put("Prepare format")
+#  agefmt <- value(condition(x >= 18 & x <= 24, "18 to 24"),
+#                  condition(x >= 25 & x <= 44, "25 to 44"),
+#                  condition(x >= 45 & x <= 64, "45 to 64"),
+#                  condition(x >= 65, ">= 65"))
 #  
-#     })
+#  
+#  put("Prepare data")
+#  datastep(sdtm.DM, keep = v(USUBJID, SEX, AGE, ARM, AGECAT),
+#      where = expression(ARM != "SCREEN FAILURE"),
+#      {
+#          AGECAT <- fapply(AGE, agefmt)
+#  
+#      }) -> dm_mod
 #  
 #  put("Get population counts")
-#  arm_pop <- count(dm_mod, ARM) |> put()
-#  sex_pop <- count(dm_mod, SEX) |> put()
-#  agecat_pop <- count(dm_mod, AGECAT) |> put()
+#  proc_freq(dm_mod, tables = ARM,
+#            options = v(nonobs, nopercent)) -> arm_pop
 #  
-#  # Convert agecat to factor so rows will sort correctly
-#  agecat_pop$AGECAT <- factor(agecat_pop$AGECAT, levels = c("18 to 24",
-#                                                            "25 to 44",
-#                                                            "45 to 64",
-#                                                            ">= 65"))
-#  # Sort agecat
-#  agecat_pop <- agecat_pop |> arrange(AGECAT)
+#  proc_freq(dm_mod, tables = SEX,
+#            options = v(nonobs, nopercent)) -> sex_pop
+#  
+#  proc_freq(dm_mod, tables = AGECAT,
+#            options = v(nonobs, nopercent)) -> agecat_pop
+#  
+#  
+#  put("Convert agecat to factor so rows will sort correctly")
+#  agecat_pop$CAT <- factor(agecat_pop$CAT, levels = levels(agefmt))
+#  
+#  put("Sort agecat")
+#  agecat_pop <-  proc_sort(agecat_pop, by = CAT)
 #  
 #  
 #  # Create Plots ------------------------------------------------------------
 #  
 #  
-#  plt1 <- ggplot(data = arm_pop, aes(x = ARM, y = n)) +
+#  plt1 <- ggplot(data = arm_pop, aes(x = CAT, y = CNT)) +
 #    geom_col(fill = "#0000A0") +
-#    geom_text(aes(label = n), vjust = 1.5, colour = "white") +
+#    geom_text(aes(label = CNT), vjust = 1.5, colour = "white") +
 #    labs(x = "Treatment Group", y = "Number of Subjects (n)")
 #  
-#  plt2 <- ggplot(data = sex_pop, aes(x = SEX, y = n)) +
+#  plt2 <- ggplot(data = sex_pop, aes(x = CAT, y = CNT)) +
 #    geom_col(fill = "#00A000") +
-#    geom_text(aes(label = n), vjust = 1.5, colour = "white") +
+#    geom_text(aes(label = CNT), vjust = 1.5, colour = "white") +
 #    labs(x = "Biological Sex", y = "Number of Subjects (n)")
 #  
-#  plt3 <- ggplot(data = agecat_pop, aes(x = AGECAT, y = n)) +
+#  plt3 <- ggplot(data = agecat_pop, aes(x = CAT, y = CNT)) +
 #    geom_col(fill = "#A00000") +
-#    geom_text(aes(label = n), vjust = 1.5, colour = "white") +
+#    geom_text(aes(label = CNT), vjust = 1.5, colour = "white") +
 #    labs(x = "Age Categories", y = "Number of Subjects (n)")
 #  
 #  
@@ -130,5 +133,4 @@ knitr::opts_chunk$set(
 #  # View files
 #  # file.show(pth)
 #  # file.show(lgpth)
-#  
 

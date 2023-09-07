@@ -5,7 +5,7 @@ knitr::opts_chunk$set(
 )
 
 ## ----eval=FALSE, echo=TRUE----------------------------------------------------
-#  library(tidyverse)
+#  library(ggplot2)
 #  library(sassy)
 #  
 #  options("logr.autolog" = TRUE,
@@ -18,37 +18,50 @@ knitr::opts_chunk$set(
 #  pkg <- system.file("extdata", package = "sassy")
 #  
 #  # Open log
-#  lgpth <- log_open(file.path(tmp, "example3.log"))
+#  lgpth <- log_open(file.path(tmp, "example6.log"))
+#  
+#  
+#  # Prepare Data ------------------------------------------------------------
+#  
+#  
 #  
 #  sep("Prepare Data")
 #  
-#  # Create libname for csv data
+#  put("Create libname for csv data")
 #  libname(sdtm, pkg, "csv")
 #  
-#  # Load data into workspace
+#  put("Load data into workspace")
 #  lib_load(sdtm)
 #  
 #  put("Perform joins and basic filters")
-#  prep <- sdtm.DM |>
-#    left_join(sdtm.VS, by = c("USUBJID" = "USUBJID")) |>
-#    select(USUBJID, ARMCD, ARM, VSTESTCD, VSTEST, VSORRES, VISITNUM, VISIT) |>
-#    filter(VSTESTCD %in% c("SYSBP", "DIABP", "PULSE", "TEMP", "RESP"),
-#           ARMCD != "SCRNFAIL") |> put()
+#  datastep(sdtm.DM, merge = sdtm.VS, merge_by = c("USUBJID" = "USUBJID"),
+#           keep = v(USUBJID, ARMCD, ARM, VSTESTCD, VSTEST, VSORRES, VISITNUM, VISIT),
+#           where = expression(VSTESTCD %in% c("SYSBP", "DIABP", "PULSE", "TEMP", "RESP") &
+#                                        ARMCD != "SCRNFAIL"), {}) -> prep
 #  
+#  put("Change VISIT to factor so it sorts properly")
+#  prep$VISIT <- factor(prep$VISIT, levels = c("DAY 1", "WEEK 2", "WEEK 4",
+#                                         "WEEK 6","WEEK 8", "WEEK 12",
+#                                         "WEEK 16"))
 #  put("Group and summarize")
-#  final <- prep |>
-#    group_by(ARMCD, ARM, VSTESTCD, VSTEST, VISITNUM, VISIT) |>
-#    summarize(MEAN = mean(VSORRES, na.rm = TRUE)) |>
-#    filter(VISITNUM > 0 & VISITNUM < 20) |>
-#    mutate(VISIT = factor(VISIT, levels = c("DAY 1", "WEEK 2", "WEEK 4",
-#                                            "WEEK 6","WEEK 8", "WEEK 12",
-#                                            "WEEK 16"))) |>
-#    ungroup() |> put()
+#  proc_means(prep,
+#             var = VSORRES,
+#             class = v(ARM, VSTEST, VISITNUM, VISIT),
+#             options = v(nway, nofreq, notype),
+#             stats = mean) |>
+#    datastep(where = expression(VISITNUM > 0 & VISITNUM < 20),{}) -> final
+#  
+#  put("Rename variables for clarity")
+#  names(final) <- toupper(labels(final))
+#  
+#  
+#  # Create Plots ------------------------------------------------------------
+#  
 #  
 #  
 #  sep("Create plots and print report")
 #  
-#  # Create plot
+#  put("Create plot")
 #  p <- final |>
 #    ggplot(mapping = aes(y = MEAN, x = VISIT , group = ARM)) +
 #    geom_point(aes(shape = ARM, color = ARM)) +
@@ -56,10 +69,13 @@ knitr::opts_chunk$set(
 #    scale_x_discrete(name = "Visit") +
 #    scale_y_continuous(name = "Value")
 #  
-#  # Construct output path
-#  pth <- file.path(tmp, "output/f_vs.rtf")
 #  
-#  # Define report object
+#  # Create Report -----------------------------------------------------------
+#  
+#  put("Construct output path")
+#  pth <- file.path(tmp, "output/example6.rtf")
+#  
+#  put("Define report object")
 #  rpt <- create_report(pth, output_type = "RTF", font = "Arial") |>
 #    set_margins(top = 1, bottom = 1) |>
 #    page_header("Sponsor: Company", "Study: ABC") |>
@@ -71,13 +87,13 @@ knitr::opts_chunk$set(
 #    page_footer(paste0("Date Produced: ", fapply(Sys.time(), "%d%b%y %H:%M")),
 #                right = "Page [pg] of [tpg]")
 #  
-#  # Write report to file system
+#  put("Write report to file system")
 #  write_report(rpt)
 #  
-#  # Close libname
-#  lib_close(sdtm)
+#  put("Close libname")
+#  lib_unload(sdtm)
 #  
-#  # Close log
+#  put("Close log")
 #  log_close()
 #  
 #  # View report

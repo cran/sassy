@@ -4,13 +4,13 @@
 [![sassy lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://cran.r-project.org/package=sassy)
 [![sassy downloads](https://cranlogs.r-pkg.org/badges/sassy)](https://cran.r-project.org/package=sassy)
 [![sassy total downloads](https://cranlogs.r-pkg.org/badges/grand-total/sassy)](https://cran.r-project.org/package=sassy)
-[![R-CMD-check](https://github.com/dbosak01/sassy/workflows/R-CMD-check/badge.svg)](https://github.com/dbosak01/sassy/actions)
+[![R-CMD-check](https://github.com/dbosak01/sassy/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dbosak01/sassy/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/dbosak01/sassy/branch/master/graph/badge.svg)](https://app.codecov.io/gh/dbosak01/sassy?branch=master)
 
 <!-- badges: end -->
 
 # Introduction to **sassy**
-<img src="./man/images/logo_blue.png" align="left" height="138" style="margin-right: 20px;margin-bottom: 30px;"/>
+<img src="./man/images/logo_blue.png" align="left" height="138" style="margin-right: 20px;margin-bottom: 30px;height: 138px"/>
 
 For SAS® programmers, encountering R for the first time can be quite a shock.
 
@@ -35,6 +35,7 @@ system you can:
 * Create a libname
 * Create a format catalog
 * Do a data step
+* Generate frequency and summary statistics
 * Write a report in a few lines of code
 * And more!
 

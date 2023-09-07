@@ -5,8 +5,8 @@ knitr::opts_chunk$set(
 )
 
 ## ----eval=FALSE, echo=TRUE----------------------------------------------------
-#  library(tidyverse)
 #  library(sassy)
+#  library(ggplot2)
 #  library(patchwork)
 #  
 #  
@@ -30,35 +30,31 @@ knitr::opts_chunk$set(
 #  
 #  sep("Prepare Data")
 #  
-#  # Define data library
+#  put("Define data library")
 #  libname(sdtm, dir, "csv")
 #  
-#  # Loads data into workspace
+#  put("Load data into workspace")
 #  lib_load(sdtm)
 #  
-#  # Prepare data
-#  dm_mod <- sdtm.DM %>%
-#    select(USUBJID, SEX, AGE, ARM) %>%
-#    filter(ARM != "SCREEN FAILURE") %>%
-#    datastep({
+#  put("Prepare format")
+#  agefmt <- value(condition(x >= 18 & x <= 24, "18 to 24"),
+#                  condition(x >= 25 & x <= 44, "25 to 44"),
+#                  condition(x >= 45 & x <= 64, "45 to 64"),
+#                  condition(x >= 65, ">= 65"))
 #  
-#       if (AGE >= 18 & AGE <= 24)
-#         AGECAT = "18 to 24"
-#       else if (AGE >= 25 & AGE <= 44)
-#         AGECAT = "25 to 44"
-#       else if (AGE >= 45 & AGE <= 64)
-#         AGECAT <- "45 to 64"
-#       else if (AGE >= 65)
-#         AGECAT <- ">= 65"
+#  put("Prepare data")
+#  datastep(sdtm.DM,
+#           keep = v(USUBJID, SEX, AGE, ARM, AGECAT),
+#           where = expression(ARM != "SCREEN FAILURE"),
+#    {
 #  
-#     }) %>% put()
+#        AGECAT = fapply(AGE, agefmt)
+#  
+#    }) -> dm_mod
 #  
 #  
 #  put("Convert agecat to factor it will sort correctly")
-#  dm_mod$AGECAT <- factor(dm_mod$AGECAT, levels = c("18 to 24",
-#                                                    "25 to 44",
-#                                                    "45 to 64",
-#                                                    ">= 65"))
+#  dm_mod$AGECAT <- factor(dm_mod$AGECAT, levels = levels(agefmt))
 #  
 #  put("Split by ARM")
 #  dm_sub <- split(dm_mod, factor(dm_mod$ARM))
@@ -102,16 +98,16 @@ knitr::opts_chunk$set(
 #  pth <- file.path(tmp, "output/example12.rtf")
 #  
 #  
-#  plt <- create_plot(plts, 4.5, 7) %>%
+#  plt <- create_plot(plts, 4.5, 7) |>
 #    titles("Figure 3.2", "Distribution of Subjects by Treatment Group",
 #           font_size = 11, bold = TRUE)
 #  
 #  
-#  rpt <- create_report(pth, output_type = "RTF", font = "Arial") %>%
-#    set_margins(top = 1, bottom = 1) %>%
-#    page_header("Sponsor: Company", "Study: ABC") %>%
-#    add_content(plt) %>%
-#    footnotes("Program: DM_Figure.R") %>%
+#  rpt <- create_report(pth, output_type = "RTF", font = "Arial") |>
+#    set_margins(top = 1, bottom = 1) |>
+#    page_header("Sponsor: Company", "Study: ABC") |>
+#    add_content(plt) |>
+#    footnotes("Program: DM_Figure.R") |>
 #    page_footer(paste0("Date Produced: ", fapply(Sys.time(), "%d%b%y %H:%M")),
 #                right = "Page [pg] of [tpg]")
 #  
