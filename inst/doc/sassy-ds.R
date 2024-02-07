@@ -31,15 +31,12 @@ knitr::opts_chunk$set(
 #  put("Define data library")
 #  libname(sdtm, dir, "csv")
 #  
-#  put("Loads data into workspace")
-#  lib_load(sdtm)
-#  
 #  put("Prepare DM data")
-#  datastep(sdtm.DM, keep = v(USUBJID, ARM),
+#  datastep(sdtm$DM, keep = v(USUBJID, ARM),
 #           where = expression(ARM != "SCREEN FAILURE"), {}) -> dm_mod
 #  
 #  put("Prepare DS data")
-#  datastep(sdtm.DS, keep = v(USUBJID, DSTERM, DSDECOD, DSCAT),
+#  datastep(sdtm$DS, keep = v(USUBJID, DSTERM, DSDECOD, DSCAT),
 #           where = expression(DSCAT != "PROTOCOL MILESTONE"), {}) -> ds_mod
 #  
 #  put("Join DM with DS to get ARMs on DS")
@@ -215,9 +212,6 @@ knitr::opts_chunk$set(
 #  
 #  
 #  # Clean Up ----------------------------------------------------------------
-#  
-#  # Unload library from workspace
-#  lib_unload(sdtm)
 #  
 #  # Close log
 #  log_close()

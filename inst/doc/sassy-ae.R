@@ -29,11 +29,8 @@ knitr::opts_chunk$set(
 #  # Create libname for csv data
 #  libname(sdtm, dir, "csv", quiet = TRUE)
 #  
-#  # Load data into workspace
-#  lib_load(sdtm)
-#  
 #  put("Filter DM data")
-#  datastep(sdtm.DM,
+#  datastep(sdtm$DM,
 #           keep = v(USUBJID, ARM, ARMCD),
 #           where = expression(ARM != "SCREEN FAILURE"), {}) -> dm
 #  
@@ -46,7 +43,7 @@ knitr::opts_chunk$set(
 #  sevn <- c(MILD = 1, MODERATE = 2, SEVERE = 3) |> put()
 #  
 #  put("Prepare table data")
-#  datastep(sdtm.AE, merge = dm,
+#  datastep(sdtm$AE, merge = dm,
 #           merge_by = "USUBJID",
 #           merge_in = v(inA, inB),
 #           keep = v(USUBJID, ARM, AESEV, AESEVN, AESOC, AEDECOD),
@@ -222,9 +219,6 @@ knitr::opts_chunk$set(
 #  
 #  # Clean Up ----------------------------------------------------------------
 #  sep("Clean Up")
-#  
-#  put("Remove library from workspace")
-#  lib_unload(sdtm)
 #  
 #  put("Close log")
 #  log_close()

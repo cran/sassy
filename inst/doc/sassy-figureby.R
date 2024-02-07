@@ -30,11 +30,8 @@ knitr::opts_chunk$set(
 #  put("Create libname for csv data")
 #  libname(sdtm, pkg, "csv")
 #  
-#  put("Load data into workspace")
-#  lib_load(sdtm)
-#  
 #  put("Perform joins and basic filters")
-#  datastep(sdtm.DM, merge = sdtm.VS, merge_by = c("USUBJID" = "USUBJID"),
+#  datastep(sdtm$DM, merge = sdtm$VS, merge_by = c("USUBJID" = "USUBJID"),
 #           keep = v(USUBJID, ARMCD, ARM, VSTESTCD, VSTEST, VSORRES, VISITNUM, VISIT),
 #           where = expression(VSTESTCD %in% c("SYSBP", "DIABP", "PULSE", "TEMP", "RESP") &
 #                                        ARMCD != "SCRNFAIL"), {}) -> prep
@@ -89,9 +86,6 @@ knitr::opts_chunk$set(
 #  
 #  put("Write report to file system")
 #  write_report(rpt)
-#  
-#  put("Close libname")
-#  lib_unload(sdtm)
 #  
 #  put("Close log")
 #  log_close()

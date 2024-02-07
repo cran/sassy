@@ -25,12 +25,9 @@ knitr::opts_chunk$set(
 #  # Create libname for csv data
 #  libname(sdtm, pkg, "csv")
 #  
-#  # Load data into workspace
-#  lib_load(sdtm)
-#  
 #  put("Join and prepare data")
-#  prep <- sdtm.DM |>
-#    left_join(sdtm.VS, by = c("USUBJID" = "USUBJID")) |>
+#  prep <- sdtm$DM |>
+#    left_join(sdtm$VS, by = c("USUBJID" = "USUBJID")) |>
 #    select(USUBJID, VSTESTCD, VISIT, VISITNUM, VSSTRESN, ARM, VSBLFL) |>
 #    filter(VSTESTCD %in% c("PULSE", "RESP", "TEMP", "DIABP", "SYSBP"),
 #           !(VISIT == "SCREENING" & VSBLFL != "Y")) |>
@@ -134,9 +131,6 @@ knitr::opts_chunk$set(
 #  
 #  # Write report to file system
 #  write_report(rpt)
-#  
-#  # Unload data from workspace
-#  lib_unload(sdtm)
 #  
 #  # Close log
 #  log_close()

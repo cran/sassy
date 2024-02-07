@@ -24,13 +24,10 @@ knitr::opts_chunk$set(
 #  # Define data library
 #  libname(sdtm, pkg, "csv")
 #  
-#  # Load library into workspace
-#  lib_load(sdtm)
-#  
 #  sep("Write Report")
 #  
 #  # Define table object
-#  tbl <- create_table(sdtm.DM) |>
+#  tbl <- create_table(sdtm$DM) |>
 #    define(USUBJID, id_var = TRUE)
 #  
 #  # Construct report path
@@ -45,9 +42,6 @@ knitr::opts_chunk$set(
 #  
 #  # Write report to file system
 #  write_report(rpt)
-#  
-#  # Unload data
-#  lib_unload(sdtm)
 #  
 #  # Close log
 #  log_close()

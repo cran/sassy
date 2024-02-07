@@ -35,15 +35,12 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  # Get adam data
 #  libname(adam, pkg, "sas7bdat")
 #  
-#  # Load data into memory
-#  lib_load(adam)
-#  
 #  # Filter data
-#  adsl <- adam.adsl |>
+#  adsl <- adam$adsl |>
 #    select(USUBJID, SEX, AGEGR1, AGE, ARM) |>
 #    filter(ARM != "SCREEN FAILURE") |> put()
 #  
-#  adpsga <- adam.adpsga |>
+#  adpsga <- adam$adpsga |>
 #    filter(PARAMCD =="PSGA" & TRTA != "" & !is.na(AVISITN)) |>
 #    select(USUBJID, TRTA, AVISIT, AVISITN, AVAL, CRIT1FL) |> put()
 #  
@@ -134,7 +131,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  put("Get lower confidence intervals")
 #  ci_lower <-
 #    as.data.frame(stats_survfit_quantiles$lower) |>
-#    rownames_to_column  |>
+#    rownames_to_column()  |>
 #    mutate(block = "surv",
 #           TRTA = substring(rowname,6)) |>
 #    pivot_longer(cols = c(`25`, `50`, `75`),
@@ -145,7 +142,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  put("Get upper confidence intervals")
 #  ci_upper <-
 #    as.data.frame(stats_survfit_quantiles$upper) |>
-#    rownames_to_column |>
+#    rownames_to_column() |>
 #    mutate(block = "surv",
 #           TRTA = substring(rowname,6)) |>
 #    pivot_longer(cols = c(`25`, `50`, `75`),
@@ -174,7 +171,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  put("Get quantiles")
 #  quants <-
 #    as.data.frame(stats_survfit_quantiles$quantile) |>
-#    rownames_to_column |>
+#    rownames_to_column() |>
 #    mutate(block = "surv",
 #           TRTA = substring(rowname,6)) |>
 #    pivot_longer(cols = c(`25`, `50`, `75`),
@@ -223,7 +220,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  put("Extract coefficients")
 #  cph_coef <-
 #    as.data.frame(cph_summary$coefficients) |>
-#    rownames_to_column  |>
+#    rownames_to_column()  |>
 #    mutate(block = "surv",
 #           TRTA = substring(rowname,5)) |>
 #    put()
@@ -232,7 +229,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  cph_ci <-
 #    cph_summary$conf.int |>
 #    as.data.frame(cph_summary$conf) |>
-#    rownames_to_column  |>
+#    rownames_to_column()  |>
 #    put()
 #  
 #  put("Create cox statistics block")
@@ -393,15 +390,13 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  
 #  sep("Clean Up")
 #  
-#  lib_unload(adam)
-#  
 #  # Close log
 #  log_close()
 #  
-#  # View log
-#  writeLines(readLines(lf, encoding = "UTF-8"))
-#  
 #  # View report
 #  # file.show(res$file_path)
+#  
+#  # View log
+#  # file.show(lf)
 #  
 

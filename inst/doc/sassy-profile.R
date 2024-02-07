@@ -29,16 +29,12 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  put("Open data library")
 #  libname(sdtm, pth, "csv")
 #  
-#  put("Load data into environment")
-#  lib_load(sdtm)
-#  
-#  
 #  
 #  # Set labels --------------------------------------------------------------
 #  sep("Set labels")
 #  
 #  put("DM labels")
-#  labels(sdtm.DM) <- list(ARM = "Treatment Group",
+#  labels(sdtm$DM) <- list(ARM = "Treatment Group",
 #                          SITEID = "Centre",
 #                          SUBJID = "Subject",
 #                          SEX = "Sex",
@@ -48,7 +44,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #                          ARMCD = "Treatment Code"
 #  ) |> put()
 #  put("AE labels")
-#  labels(sdtm.AE) <- list(AESTDTC = "Event Start Date",
+#  labels(sdtm$AE) <- list(AESTDTC = "Event Start Date",
 #                          AEENDTC = "Event Stop Date",
 #                          AESTDY = "Start",
 #                          AEENDY = "End",
@@ -90,11 +86,11 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #                  condition(x == "ARM D", "Competitor"))
 #  
 #  
-#  formats(sdtm.DM) <- list(SEX = sexfmt,
+#  formats(sdtm$DM) <- list(SEX = sexfmt,
 #                           RACE = racefmt,
 #                           ARM = armfmt)
 #  
-#  formats(sdtm.AE) <- list(AESEV = sevfmt,
+#  formats(sdtm$AE) <- list(AESEV = sevfmt,
 #                           AEREL = relfmt,
 #                           AESER = serfmt)
 #  
@@ -104,7 +100,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  sep("Prepare data")
 #  
 #  put("Select desired columns from DM dataset")
-#  datastep(sdtm.DM,
+#  datastep(sdtm$DM,
 #           keep = v(USUBJID, ARM, SITEID, SUBJID, SEX, AGE, RACE, BRTHDTC), {}) -> dm
 #  
 #  
@@ -112,7 +108,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  dmlst <- split(dm, factor(dm$USUBJID))
 #  
 #  put("Select desired columns from AE dataset")
-#  datastep(sdtm.AE,
+#  datastep(sdtm$AE,
 #           keep = v(USUBJID, AESTDTC, AEENDTC, AESTDY,
 #                    AEENDY, AESOC, AESEV, AESER, AEREL), {}) -> ae
 #  
@@ -166,8 +162,6 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 #  
 #  
 #  sep("Clean up")
-#  
-#  lib_unload(sdtm)
 #  
 #  log_close()
 #  

@@ -14,16 +14,16 @@
 #' The packages included in the \strong{sassy} meta-package are
 #' as follows:
 #' \itemize{
-#'   \item {\code{\link[libr]{libr}}:}{ Define a libname, view
+#'   \item {\code{\link[libr]{libr}}: Define a libname, view
 #'   data dictionaries, and simulate a data step.}
-#'   \item {\code{\link[fmtr]{fmtr}}:}{ Create a format catalog
+#'   \item {\code{\link[fmtr]{fmtr}}: Create a format catalog
 #' and apply formats to a data frame or vector.}
-#'   \item {\code{\link[logr]{logr}}:}{ Generate a traceable log.}
-#'   \item {\code{\link[reporter]{reporter}}:}{ Write reports and output
+#'   \item {\code{\link[logr]{logr}}: Generate a traceable log.}
+#'   \item {\code{\link[reporter]{reporter}}: Write reports and output
 #'   in TXT, RTF, PDF, HTML, and DOCX.}
-#'   \item {\code{common}:}{ A set of utility functions
+#'   \item {\code{\link[common]{common}}: A set of utility functions
 #'   shared across the \strong{sassy} family of packages.}
-#'   \item {\code{procs}:}{ A package to simulate frequently used SAS® procedures.}
+#'   \item {\code{\link[procs]{procs}}: A package to simulate frequently used SAS® procedures.}
 #' }
 #' @examples
 #' #########################################################
@@ -81,25 +81,24 @@
 #'
 #' # View log
 #' # file.show(lgpth)
-#' @docType package
 #' @keywords internal
 #' @name sassy
 #' @aliases sassy-package
+#' @import fmtr
 #' @import common
 #' @import logr
-#' @import fmtr
 #' @import libr
 #' @import reporter
 #' @import procs
-NULL
+"_PACKAGE"
 
 
 
 .onAttach <- function(...) {
 
+  do.call("library", list("fmtr"))
   do.call("library", list("common"))
   do.call("library", list("logr"))
-  do.call("library", list("fmtr"))
   do.call("library", list("libr"))
   do.call("library", list("reporter"))
   do.call("library", list("procs"))

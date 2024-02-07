@@ -33,9 +33,6 @@ knitr::opts_chunk$set(
 #  put("Define data library")
 #  libname(sdtm, dir, "csv")
 #  
-#  put("Load data into workspace")
-#  lib_load(sdtm)
-#  
 #  put("Prepare format")
 #  agefmt <- value(condition(x >= 18 & x <= 24, "18 to 24"),
 #                  condition(x >= 25 & x <= 44, "25 to 44"),
@@ -43,7 +40,7 @@ knitr::opts_chunk$set(
 #                  condition(x >= 65, ">= 65"))
 #  
 #  put("Prepare data")
-#  datastep(sdtm.DM,
+#  datastep(sdtm$DM,
 #           keep = v(USUBJID, SEX, AGE, ARM, AGECAT),
 #           where = expression(ARM != "SCREEN FAILURE"),
 #    {
@@ -116,9 +113,6 @@ knitr::opts_chunk$set(
 #  
 #  
 #  # Clean Up ----------------------------------------------------------------
-#  
-#  # Unload library from workspace
-#  lib_unload(sdtm)
 #  
 #  # Close log
 #  log_close()
