@@ -25,9 +25,7 @@ knitr::opts_chunk$set(
 #  pth <- system.file("extdata", package = "sassy")
 #  
 #  put("Open data library")
-#  #libname(sdtm, pth, "csv")
-#  libname(sdtm, "./data/abc/SDTM", "csv")
-#  
+#  libname(sdtm, pth, "csv")
 #  
 #  # Create Formats ----------------------------------------------------------
 #  
