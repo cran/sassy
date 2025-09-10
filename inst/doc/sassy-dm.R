@@ -231,7 +231,7 @@ knitr::opts_chunk$set(
 #                 copy = VAR,
 #                 id = BY,
 #                 by = LABEL,
-#                 options = noname) -> ageg_trans
+#                 options = noname) -> ageg_block
 #  
 #  put("Combine blocks into final data frame")
 #  datastep(age_block,

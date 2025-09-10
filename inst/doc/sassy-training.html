@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Papers and Training</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Papers and Training</h1>
+
+
+
+<p>Some information on the <strong>sassy</strong> packages exists
+outside the system documentation. Here are some links to those external
+sources.</p>
+<div id="papers" class="section level2">
+<h2>Papers</h2>
+<p>Below is a list of papers covering various aspects of the
+<strong>sassy</strong> system:</p>
+<ul>
+<li><a href="https://pharmasug.org/proceedings/2025/AP/PharmaSUG-2025-AP-263.pdf">Why
+SASSY?</a>, 2025</li>
+<li><a href="https://sesug.org/proceedings/sesug_2024_SAAG/PresentationSummaries/Papers/113_Final_PDF.pdf">Replicating
+SAS Reports in R: The REPORTER Package</a>, 2024</li>
+<li><a href="https://www.lexjansen.com/sesug/2024/111_Final_PDF.pdf">Examining
+the R datastep() Function</a>, 2024</li>
+<li><a href="https://pharmasug.org/proceedings/2024/AP/PharmaSUG-2024-AP-295.pdf">Replicating
+SAS® Procedures in R with the PROCS Package</a>, 2024</li>
+<li><a href="https://www.lexjansen.com/wuss/2023/WUSS-2023-Paper-185.pdf">An
+Overview of the SASSY System</a>, 2023</li>
+</ul>
+</div>
+<div id="sassy-training" class="section level2">
+<h2>SASSY Training</h2>
+<p>The following training videos can help get you up to speed on the
+<strong>sassy</strong> system:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=o20fT6IOBVs&amp;list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&amp;index=1">Logr
+Package Overview</a></li>
+<li><a href="https://www.youtube.com/watch?v=uHo8J9LR1xo&amp;list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&amp;index=6">Introduction
+to Data Libraries in R</a></li>
+<li><a href="https://www.youtube.com/watch?v=PuqQFqOrFXQ&amp;list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&amp;index=4">Introduction
+to Reporter</a></li>
+<li><a href="https://www.youtube.com/watch?v=n_E5Y2BgmYk&amp;list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&amp;index=2">Creating
+a Format Catalog from Data</a></li>
+<li><a href="https://www.youtube.com/watch?v=DK4kCYgNjfA&amp;list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&amp;index=3">Overview
+of the proc_reg() Function</a></li>
+<li><a href="https://www.youtube.com/watch?v=0SnOYyS7x8k&amp;list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&amp;index=5">How
+to Run a Batch Job in R</a></li>
+</ul>
+</div>
+<div id="r-training" class="section level2">
+<h2>R Training</h2>
+<p>If you know nothing about R, these videos can give you the
+basics:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=WLSW8-f12Ls&amp;list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY">01.00
+Introduction to R</a></li>
+<li><a href="https://www.youtube.com/watch?v=s7Gifa0-UuE&amp;list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&amp;index=2">01.01
+IDE Setup</a></li>
+<li><a href="https://www.youtube.com/watch?v=B_Ie6PZpspE&amp;list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&amp;index=3">01.02
+Vectors</a></li>
+<li><a href="https://www.youtube.com/watch?v=8i0TPtkFdxc&amp;list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&amp;index=4">01.03
+Lists</a></li>
+<li><a href="https://www.youtube.com/watch?v=PZENOrdCwtY&amp;list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&amp;index=5">01.04
+Factors</a></li>
+<li><a href="https://www.youtube.com/watch?v=k7Y75L1W6sU&amp;list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&amp;index=6">01.05
+Data Frames</a></li>
+<li><a href="https://www.youtube.com/watch?v=MVtzrakotqk&amp;list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&amp;index=7">01.06
+Tibbles</a></li>
+<li><a href="https://www.youtube.com/watch?v=TCwHVsfVbyc&amp;list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&amp;index=8">01.07
+Operators in R</a></li>
+</ul>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

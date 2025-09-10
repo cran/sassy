@@ -1,3 +1,13 @@
+# sassy 1.2.8
+
+* Updated required versions.
+* Added page for papers and training videos.
+* Updated index to add links to new training page.
+
+# sassy 1.2.6
+
+* Updated required versions.
+
 # sassy 1.2.5
 
 * Updated required versions.
