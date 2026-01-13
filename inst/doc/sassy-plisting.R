@@ -180,7 +180,6 @@ knitr::opts_chunk$set(
 #  
 #  # Clean Up ----------------------------------------------------------------
 #  
-#  lib_unload(sdtm)
 #  
 #  log_close()
 #  

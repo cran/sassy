@@ -71,7 +71,7 @@ test_that("OQ-03: check_packages() works as expected.", {
 
   res <- check_packages()
 
-  expect_equal(nrow(res), 6)
+  expect_equal(nrow(res), 7)
   expect_true(all(res$Pass == TRUE))
 
 })
@@ -173,9 +173,25 @@ test_that("OQ-09: check_procs() works as expected.", {
 })
 
 
+test_that("OQ-10: check_macro() works as expected.", {
+
+  pth <- file.path(base_path, "OQ/output")
+
+  if (!dir.exists(pth))
+    dir.create(pth, recursive = TRUE)
+
+  res <- check_macro(pth)
+
+  res
+  expect_equal(nrow(res), 3)
+  expect_true(all(res$Pass == TRUE))
+
+})
 
 
-test_that("OQ-10: run_oq() works as expected.", {
+
+
+test_that("OQ-11: run_oq() works as expected.", {
 
   pth <- file.path(base_path, "OQ")
 
